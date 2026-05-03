@@ -1,0 +1,248 @@
+1. Product vision
+
+You’re building:
+
+An interactive machine learning visualization toolbox
+
+Key characteristics:
+
+* Playground-first, not lecture-first
+* Structured by course (weeks → topics → tools)
+* Designed for real users, not just personal notes
+* Premium, product-quality UI from day one
+
+⸻
+
+2. Core UX philosophy
+
+What users do
+
+Open tool → understand quickly → interact → observe behavior
+
+NOT:
+
+Read long theory → then maybe interact
+
+Content priority (V1)
+
+Visualization + controls + guided intro
+
+Deferred:
+
+Heavy theory
+Formulas
+Lecture-style content
+
+⸻
+
+3. Information architecture
+
+Hierarchy:
+
+Week → Topic → Tool (visualizer)
+
+Navigation:
+
+* Linear sidebar (hideable)
+* Global search across all tools
+* Feels like:
+    * a toolbox
+    * but ordered like a course
+
+⸻
+
+4. Page structure (standardized)
+
+Each tool page:
+
+Top bar
+Sidebar
+Main visualization
+Control panel
+Guided intro overlay (first visit)
+
+Layout concept:
+
+Sidebar | Visualization
+        | Controls
+
+⸻
+
+5. Interaction design
+
+Depth:
+
+Medium → Heavy
+
+Features:
+
+* Sliders (e.g. k in kNN)
+* Step / play controls
+* Reset state
+* Preset datasets
+* Later:
+    * custom data upload
+    * handwriting demo
+    * comparisons
+
+⸻
+
+6. State philosophy
+
+For now:
+
+All state is local
+Refresh resets everything
+
+Later (with accounts):
+
+Synced:
+
+* progress
+* quiz results
+* bookmarks
+
+NOT synced:
+
+* visualization parameters
+* temporary data
+* tool state
+
+⸻
+
+7. Design direction
+
+Target:
+
+Dark-first
+Minimal but not empty
+Technical but premium
+Apple-like polish
+
+Key principles:
+
+* Consistent spacing system
+* High-quality typography
+* Subtle animations (not flashy)
+* Meaningful color usage
+* Fast and smooth performance
+
+Avoid:
+
+* generic dashboards
+* overly flashy styles
+* “unfinished minimal”
+
+⸻
+
+8. V1 scope
+
+Core topics:
+
+kNN
+Decision Trees
+Linear Regression
+Logistic Regression
+K-means
+
+Each may have multiple tools.
+
+⸻
+
+9. Tech stack
+
+You chose:
+
+Next.js (App Router)
+React + TypeScript
+Tailwind CSS
+
+Add:
+
+d3               visualization
+framer-motion    animation
+zustand          optional state
+lucide-react     icons
+katex            later (formulas)
+
+⸻
+
+10. Architecture principles
+
+Separate:
+
+Algorithm logic (pure)
+vs
+UI / visualization (React)
+
+Structure:
+
+/lib/algorithms      math logic
+/components/ui       design system
+/components/layout   app structure
+/components/visualizers
+
+⸻
+
+11. Development plan
+
+Build in this order:
+
+1. App shell (layout)
+2. Theme system (dark/light)
+3. Sidebar navigation
+4. Global search
+5. Tool layout
+6. Placeholder visualizer
+7. First real tool (kNN)
+
+⸻
+
+12. Deployment plan
+
+* Develop locally first (Ubuntu + Node + Next.js)
+* Later deploy using:
+
+Cloudflare (Workers / Pages)
+
+* Personal domain later
+
+⸻
+
+13. Long-term roadmap
+
+Future additions:
+
+User accounts
+Progress tracking
+Quizzes
+Search across content
+Formula + theory pages
+Custom datasets
+Sharing states via URL
+
+⸻
+
+14. Core identity
+
+Your product is:
+
+Not a lecture site
+Not a notebook
+Not a dashboard
+→ A polished, interactive ML intuition engine
+
+⸻
+
+Next logical step
+
+You are ready to start coding:
+
+Step 1: build AppShell + Sidebar + Theme
+Step 2: create ToolLayout
+Step 3: implement kNN visualizer
+
+If you want, next I can give you:
+
+* exact AppShell code
+* or kNN visualizer architecture (step-by-step)

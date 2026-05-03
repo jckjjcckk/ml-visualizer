@@ -1,26 +1,242 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  color-scheme: light;
+
+  --background: #f7faf8;
+  --foreground: #111816;
+
+  --surface-app: #f7faf8;
+  --surface-canvas: #eef5f0;
+  --surface-panel: #ffffffcc;
+  --surface-panel-raised: #fffffff2;
+  --surface-glass: #ffffffa8;
+  --surface-inset: #eaf1ed;
+
+  --text-primary: #111816;
+  --text-secondary: #3b4944;
+  --text-muted: #6c7a75;
+  --text-inverse: #f8fbf9;
+
+  --border: #d7e2dd;
+  --border-strong: #b8c8c1;
+  --border-glass: #ffffffd9;
+  --focus: #4e7f68;
+  --focus-soft: #dbece4;
+
+  --class-a: #426d5b;
+  --class-b: #5b6f86;
+  --class-c: #8b6f56;
+  --class-d: #726988;
+  --prediction: #2f6d57;
+  --neighbor: #5e8a78;
+  --split: #617082;
+  --residual: #9a6b34;
+  --error: #a7554c;
+  --success: #4c7f63;
+  --warning: #947043;
+
+  --plot-grid: #dce7e2;
+  --plot-axis: #8a9b94;
+  --plot-tick: #6b7a75;
+  --plot-region: #dcece5;
+  --plot-point-stroke: #f8fbf9;
+  --plot-hover: #c8ded5;
+
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+
+  --radius-xs: 3px;
+  --radius-sm: 5px;
+  --radius-md: 8px;
+  --radius-card: 8px;
+  --radius-control: 999px;
+
+  --shadow-soft: 0 18px 48px #1b2a2414;
+  --shadow-panel: 0 20px 60px #1632261f;
+  --shadow-focus: 0 0 0 3px var(--focus-soft);
+  --blur-glass: 18px;
+  --transition-fast: 140ms ease;
+  --transition-base: 220ms ease;
+
+  --font-size-display: clamp(2.25rem, 4vw, 4.5rem);
+  --font-size-title: 1.5rem;
+  --font-size-body: 1rem;
+  --font-size-label: 0.8125rem;
+  --font-size-caption: 0.75rem;
+  --line-height-tight: 1.1;
+  --line-height-title: 1.25;
+  --line-height-body: 1.6;
+  --tracking-label: 0.04em;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-canvas: var(--surface-canvas);
+  --color-panel: var(--surface-panel);
+  --color-panel-raised: var(--surface-panel-raised);
+  --color-glass: var(--surface-glass);
+  --color-inset: var(--surface-inset);
+  --color-muted: var(--text-muted);
+  --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
+  --color-focus: var(--focus);
+  --color-focus-soft: var(--focus-soft);
+  --color-class-a: var(--class-a);
+  --color-class-b: var(--class-b);
+  --color-class-c: var(--class-c);
+  --color-class-d: var(--class-d);
+  --color-prediction: var(--prediction);
+  --color-neighbor: var(--neighbor);
+  --color-split: var(--split);
+  --color-residual: var(--residual);
+  --color-error: var(--error);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-plot-grid: var(--plot-grid);
+  --color-plot-axis: var(--plot-axis);
+  --color-plot-tick: var(--plot-tick);
+  --color-plot-region: var(--plot-region);
+  --color-plot-hover: var(--plot-hover);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  :root:not([data-theme]) {
+    color-scheme: dark;
+
+    --background: #080c0e;
+    --foreground: #edf5f7;
+
+    --surface-app: #080c0e;
+    --surface-canvas: #0c1215;
+    --surface-panel: #121a1fcc;
+    --surface-panel-raised: #182228e6;
+    --surface-glass: #172229a8;
+    --surface-inset: #0b1114;
+
+    --text-primary: #edf5f7;
+    --text-secondary: #b7c7cb;
+    --text-muted: #788b90;
+    --text-inverse: #071012;
+
+    --border: #26343a;
+    --border-strong: #3d4e55;
+    --border-glass: #e6fbff1f;
+    --focus: #b7dce4;
+    --focus-soft: #8ed4e226;
+
+    --class-a: #8fb8ad;
+    --class-b: #91a7bf;
+    --class-c: #b6a07f;
+    --class-d: #a9a0bd;
+    --prediction: #b9dfe3;
+    --neighbor: #96bec5;
+    --split: #aab8c2;
+    --residual: #c6a16a;
+    --error: #d28f88;
+    --success: #9dc7a9;
+    --warning: #ceb37d;
+
+    --plot-grid: #1c2a2f;
+    --plot-axis: #53666d;
+    --plot-tick: #9aa9ad;
+    --plot-region: #163038;
+    --plot-point-stroke: #071012;
+    --plot-hover: #25434a;
+
+    --shadow-soft: 0 18px 52px #00000066;
+    --shadow-panel: 0 24px 72px #0000007a;
+    --shadow-focus: 0 0 0 3px var(--focus-soft);
   }
 }
 
+:root[data-theme="dark"] {
+  color-scheme: dark;
+
+  --background: #080c0e;
+  --foreground: #edf5f7;
+
+  --surface-app: #080c0e;
+  --surface-canvas: #0c1215;
+  --surface-panel: #121a1fcc;
+  --surface-panel-raised: #182228e6;
+  --surface-glass: #172229a8;
+  --surface-inset: #0b1114;
+
+  --text-primary: #edf5f7;
+  --text-secondary: #b7c7cb;
+  --text-muted: #788b90;
+  --text-inverse: #071012;
+
+  --border: #26343a;
+  --border-strong: #3d4e55;
+  --border-glass: #e6fbff1f;
+  --focus: #b7dce4;
+  --focus-soft: #8ed4e226;
+
+  --class-a: #8fb8ad;
+  --class-b: #91a7bf;
+  --class-c: #b6a07f;
+  --class-d: #a9a0bd;
+  --prediction: #b9dfe3;
+  --neighbor: #96bec5;
+  --split: #aab8c2;
+  --residual: #c6a16a;
+  --error: #d28f88;
+  --success: #9dc7a9;
+  --warning: #ceb37d;
+
+  --plot-grid: #1c2a2f;
+  --plot-axis: #53666d;
+  --plot-tick: #9aa9ad;
+  --plot-region: #163038;
+  --plot-point-stroke: #071012;
+  --plot-hover: #25434a;
+
+  --shadow-soft: 0 18px 52px #00000066;
+  --shadow-panel: 0 24px 72px #0000007a;
+  --shadow-focus: 0 0 0 3px var(--focus-soft);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  min-height: 100%;
+  background: var(--surface-app);
+}
+
 body {
-  background: var(--background);
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at top left, color-mix(in srgb, var(--focus) 14%, transparent), transparent 34rem),
+    linear-gradient(135deg, var(--surface-app), var(--surface-canvas));
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
+  font-size: var(--font-size-body);
+  line-height: var(--line-height-body);
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::selection {
+  background: var(--focus-soft);
+  color: var(--text-primary);
+}
+
+:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 3px;
 }
