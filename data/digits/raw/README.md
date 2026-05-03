@@ -14,7 +14,7 @@ individual image files directly from the browser path: that would create heavy
 request, header, scheduling, cache, and decode overhead even when each image is
 small.
 
-The `/week1/knn/mnist` runtime dataset is intentionally deferred. A later
-implementation should preprocess these raw files into browser-friendly chunks,
-such as compact pixel-vector binaries for nearest-neighbor math plus sprite or
-atlas images for visual previews.
+The `/week1/knn/mnist` runtime dataset is packed from this source folder by
+`scripts/pack-digit-dataset.mjs` into `lib/datasets/digits.ts`. The packed V0
+dataset embeds a tiny deterministic subset as compact pixel vectors for
+nearest-neighbor math, so the browser does not fetch individual raw images.

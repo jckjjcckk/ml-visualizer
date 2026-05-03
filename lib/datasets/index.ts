@@ -21,24 +21,27 @@ import {
   RESIDUAL_BALANCED_DATASET,
   RESIDUAL_OUTLIER_DATASET,
 } from "./regression";
+import { MNIST_DIGIT_DATASET } from "./digits";
 import type {
   ClassificationDataset2D,
   DatasetDomain2D,
   DatasetPreset,
+  DigitDataset,
   NumericRange,
   RegressionDataset1D,
 } from "./types";
 
 export * from "./classification";
+export * from "./digits";
 export * from "./regression";
 export * from "./types";
 
 export const ALL_DATASET_PRESETS = [
   ...CLASSIFICATION_DATASETS,
   ...REGRESSION_DATASETS,
+  MNIST_DIGIT_DATASET,
 ] as const satisfies readonly DatasetPreset[];
 
-// The digit route is intentionally absent until raw digit files are packed for runtime use.
 export const DATASET_PRESETS_BY_TOOL_PATH = {
   "/week1/knn/basic": [
     CITRUS_WIDTH_HEIGHT_DATASET,
@@ -48,6 +51,7 @@ export const DATASET_PRESETS_BY_TOOL_PATH = {
     NORMALIZATION_SCALE_TRAP_DATASET,
     NORMALIZATION_UNIT_MISMATCH_DATASET,
   ],
+  "/week1/knn/mnist": [MNIST_DIGIT_DATASET],
   "/week2/decision-tree/basic": [
     CITRUS_WIDTH_HEIGHT_DATASET,
     TREE_AXIS_SPLITS_DATASET,
@@ -257,13 +261,114 @@ const validateRegressionDataset = (dataset: RegressionDataset1D) => {
   }
 };
 
+const base64ByteLength = (value: string) => {
+  const trimmed = value.trim();
+
+  if (!/^[A-Za-z0-9+/]*={0,2}$/.test(trimmed)) {
+    return null;
+  }
+
+  const unpaddedLength = trimmed.replace(/=+$/, "").length;
+  return Math.floor((unpaddedLength * 3) / 4);
+};
+
+const validateDigitDataset = (dataset: DigitDataset) => {
+  if (
+    !Number.isInteger(dataset.image.width) ||
+    !Number.isInteger(dataset.image.height) ||
+    !Number.isInteger(dataset.image.pixelCount)
+  ) {
+    throw new Error(
+      formatDatasetError(dataset.id, "image dimensions must be integers."),
+    );
+  }
+
+  if (
+    dataset.image.width <= 0 ||
+    dataset.image.height <= 0 ||
+    dataset.image.pixelCount !== dataset.image.width * dataset.image.height
+  ) {
+    throw new Error(
+      formatDatasetError(dataset.id, "image dimensions are inconsistent."),
+    );
+  }
+
+  if (dataset.classes.length !== 10) {
+    throw new Error(
+      formatDatasetError(dataset.id, "digit datasets must expose 10 classes."),
+    );
+  }
+
+  const classLabels = new Set(
+    dataset.classes.map((datasetClass) => datasetClass.label),
+  );
+  const expectedLabels = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9] as const;
+
+  for (const expectedLabel of expectedLabels) {
+    if (!classLabels.has(expectedLabel)) {
+      throw new Error(
+        formatDatasetError(
+          dataset.id,
+          `digit class ${expectedLabel} is missing.`,
+        ),
+      );
+    }
+  }
+
+  if (dataset.samples.length === 0) {
+    throw new Error(formatDatasetError(dataset.id, "samples cannot be empty."));
+  }
+
+  validateUniqueIds(
+    dataset.id,
+    dataset.samples.map((sample) => sample.id),
+  );
+
+  const sampleIds = new Set<string>();
+
+  for (const sample of dataset.samples) {
+    sampleIds.add(sample.id);
+
+    if (!classLabels.has(sample.label)) {
+      throw new Error(
+        formatDatasetError(
+          dataset.id,
+          `sample "${sample.id}" references unknown digit ${sample.label}.`,
+        ),
+      );
+    }
+
+    const byteLength = base64ByteLength(sample.pixelsBase64);
+
+    if (byteLength !== dataset.image.pixelCount) {
+      throw new Error(
+        formatDatasetError(
+          dataset.id,
+          `sample "${sample.id}" must contain exactly ${dataset.image.pixelCount} pixels.`,
+        ),
+      );
+    }
+  }
+
+  if (!sampleIds.has(dataset.defaultQueryId)) {
+    throw new Error(
+      formatDatasetError(dataset.id, "default query id must reference a sample."),
+    );
+  }
+};
+
 const validateDatasetPreset = (dataset: DatasetPreset) => {
   if (dataset.kind === "classification-2d") {
     validateClassificationDataset(dataset);
     return;
   }
 
-  validateRegressionDataset(dataset);
+  if (dataset.kind === "regression-1d") {
+    validateRegressionDataset(dataset);
+    return;
+  }
+
+  validateDigitDataset(dataset);
 };
 
 for (const dataset of ALL_DATASET_PRESETS) {
@@ -271,6 +376,14 @@ for (const dataset of ALL_DATASET_PRESETS) {
 }
 
 for (const [toolPath, presets] of Object.entries(DATASET_PRESETS_BY_TOOL_PATH)) {
+  if (toolPath === "/week1/knn/mnist") {
+    if (presets.length < 1) {
+      throw new Error(`${toolPath} must have a digit dataset preset.`);
+    }
+
+    continue;
+  }
+
   if (presets.length < 2) {
     throw new Error(`${toolPath} must have at least two dataset presets.`);
   }

@@ -19,6 +19,8 @@ export type DatasetClass = {
   name: string;
 };
 
+export type DigitLabel = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9;
+
 export type Axis2D = "x" | "y";
 
 export type SuggestedAxisSplit2D = {
@@ -79,4 +81,39 @@ export type RegressionDataset1D = {
   target: DatasetFeature;
 };
 
-export type DatasetPreset = ClassificationDataset2D | RegressionDataset1D;
+export type DigitDatasetClass = {
+  label: DigitLabel;
+  name: string;
+};
+
+export type DigitImageShape = {
+  height: number;
+  pixelCount: number;
+  width: number;
+};
+
+export type DigitImageSample = {
+  id: string;
+  label: DigitLabel;
+  pixelsBase64: string;
+  sourceFile: string;
+  split?: DatasetSplit;
+};
+
+export type DigitDataset = {
+  classes: readonly DigitDatasetClass[];
+  defaultQueryId: string;
+  defaultSettings?: DatasetDefaultSettings;
+  id: string;
+  image: DigitImageShape;
+  kind: "digit-image";
+  label: string;
+  samples: readonly DigitImageSample[];
+  source: string;
+  summary: string;
+};
+
+export type DatasetPreset =
+  | ClassificationDataset2D
+  | RegressionDataset1D
+  | DigitDataset;

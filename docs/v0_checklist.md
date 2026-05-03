@@ -234,7 +234,7 @@ Step 1 framework notes are recorded in `README.md` under "Next.js 16 App Router 
 - [x] Create deterministic local datasets for classification tools.
 - [x] Create deterministic local datasets for regression tools.
 - [x] Provide at least two preset datasets per non-digit V0 visualizer.
-- [ ] Provide a tiny deterministic MNIST-like or embedded digit dataset for `/week1/knn/mnist`; do not fetch external data in V0. Deferred: raw source folders now live under `data/digits/raw/{0..9}`, but runtime digit packing is a separate implementation.
+- [x] Provide a tiny deterministic MNIST-like or embedded digit dataset for `/week1/knn/mnist`; do not fetch external data in V0. Runtime data is packed from `data/digits/raw/{0..9}` into `lib/datasets/digits.ts`.
 - [x] Keep dataset definitions independent of React components.
 - [x] Do not add custom dataset upload in V0.
 
