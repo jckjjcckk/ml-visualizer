@@ -72,8 +72,8 @@ const COURSE_TOOL_INPUTS = [
     topic: "kNN",
     tags: ["knn", "mnist", "digits", "nearest-neighbor", "vote"],
     summary: "Inspect nearest digit examples and the vote that drives the prediction.",
-    status: "available",
-    plan: "Query digit, nearest digits, vote counts, prediction.",
+    status: "coming-soon",
+    plan: "Deferred to Step 16a: packed local digits, query selector, drawing pad, nearest digits, vote counts, prediction.",
   },
   {
     path: "/week1/model-evaluation/train-validation-test",

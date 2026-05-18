@@ -1,4 +1,4 @@
-export type KnnDistanceMetric = "euclidean" | "manhattan";
+export type KnnDistanceMetric = "cosine" | "euclidean" | "manhattan";
 
 export type KnnPoint2D = {
   x: number;
@@ -49,11 +49,32 @@ export function manhattanDistance(a: KnnPoint2D, b: KnnPoint2D): number {
   return Math.abs(a.x - b.x) + Math.abs(a.y - b.y);
 }
 
+export function cosineDistance(a: KnnPoint2D, b: KnnPoint2D): number {
+  const aMagnitude = Math.hypot(a.x, a.y);
+  const bMagnitude = Math.hypot(b.x, b.y);
+
+  if (aMagnitude === 0 && bMagnitude === 0) {
+    return 0;
+  }
+
+  if (aMagnitude === 0 || bMagnitude === 0) {
+    return 1;
+  }
+
+  const similarity = (a.x * b.x + a.y * b.y) / (aMagnitude * bMagnitude);
+
+  return 1 - Math.max(-1, Math.min(1, similarity));
+}
+
 export function calculateKnnDistance(
   a: KnnPoint2D,
   b: KnnPoint2D,
   metric: KnnDistanceMetric,
 ): number {
+  if (metric === "cosine") {
+    return cosineDistance(a, b);
+  }
+
   if (metric === "manhattan") {
     return manhattanDistance(a, b);
   }

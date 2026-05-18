@@ -2,9 +2,12 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { ComingSoonTool } from "@/components/layout/coming-soon-tool";
 import { ToolPageLayout } from "@/components/layout/tool-page-layout";
+import { KnnBasicVisualizer } from "@/components/visualizers/knn-basic-visualizer";
+import { KnnNormalizationVisualizer } from "@/components/visualizers/knn-normalization-visualizer";
 import { WorkbenchPreview } from "@/components/visualizers/workbench-preview";
 import {
   COURSE_TOOLS,
+  type CourseTool,
   getCourseToolBySegments,
 } from "@/lib/course/catalog";
 
@@ -30,6 +33,20 @@ const getRouteSegments = (path: string) => {
 
 export function generateStaticParams() {
   return COURSE_TOOLS.map((tool) => getRouteSegments(tool.path));
+}
+
+function renderAvailableTool(courseTool: CourseTool) {
+  if (courseTool.path === "/week1/knn/basic") {
+    return <KnnBasicVisualizer />;
+  }
+
+  if (courseTool.path === "/week1/knn/normalization") {
+    return <KnnNormalizationVisualizer />;
+  }
+
+  return (
+    <WorkbenchPreview heading={courseTool.title} statusLabel="Route ready" />
+  );
 }
 
 export async function generateMetadata({
@@ -61,7 +78,7 @@ export default async function CourseRoutePage({ params }: CourseRoutePageProps) 
   return (
     <ToolPageLayout tool={courseTool}>
       {courseTool.status === "available" ? (
-        <WorkbenchPreview heading={courseTool.title} statusLabel="Route ready" />
+        renderAvailableTool(courseTool)
       ) : (
         <ComingSoonTool tool={courseTool} />
       )}

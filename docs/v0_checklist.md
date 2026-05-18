@@ -68,7 +68,7 @@ Before implementing any route, read the corresponding week's content in both `do
 | 1 | Supervised learning setup | `/week1/supervised-learning/setup` | `coming-soon` | N/A |
 | 2 | kNN basics | `/week1/knn/basic` | `available` | 2D points, draggable query, `k` slider, highlighted neighbors. |
 | 3 | kNN normalization pitfall | `/week1/knn/normalization` | `available` | Raw vs normalized 2D neighbor comparison. |
-| 4 | kNN MNIST digit example | `/week1/knn/mnist` | `available` | Query digit, nearest digits, vote counts, prediction. |
+| 4 | kNN MNIST digit example | `/week1/knn/mnist` | `coming-soon` | Deferred to Step 16a: packed local digits, query selector, drawing pad, nearest digits, vote counts, prediction. |
 | 5 | Train, validation, test split | `/week1/model-evaluation/train-validation-test` | `coming-soon` | N/A |
 | 6 | Decision tree basics | `/week2/decision-tree/basic` | `available` | 2D split builder with leaf regions and step controls. |
 | 7 | Entropy and information gain | `/week2/decision-tree/information-gain` | `available` | Candidate split, class counts, entropy, information gain. |
@@ -100,7 +100,7 @@ Before implementing any route, read the corresponding week's content in both `do
 
 ## Implementation Sequence
 
-Step count: 19 ordered steps.
+Step count: 20 ordered steps.
 
 The order below favors dependency safety and future scalability: establish framework rules first, then course route contracts, then shell, then plotting infrastructure, then algorithm cores, then each visualizer.
 
@@ -234,7 +234,7 @@ Step 1 framework notes are recorded in `README.md` under "Next.js 16 App Router 
 - [x] Create deterministic local datasets for classification tools.
 - [x] Create deterministic local datasets for regression tools.
 - [x] Provide at least two preset datasets per non-digit V0 visualizer.
-- [x] Provide a tiny deterministic MNIST-like or embedded digit dataset for `/week1/knn/mnist`; do not fetch external data in V0. Runtime data is packed from `data/digits/raw/{0..9}` into `lib/datasets/digits.ts`.
+- [x] Provide a packed local digit dataset foundation for `/week1/knn/mnist`; do not fetch external data in V0. Runtime data is packed from `data/digits/raw/{0..9}` into `lib/datasets/digits.ts`, while the interactive MNIST route remains deferred to Step 16a.
 - [x] Keep dataset definitions independent of React components.
 - [x] Do not add custom dataset upload in V0.
 
@@ -249,12 +249,25 @@ Step 1 framework notes are recorded in `README.md` under "Next.js 16 App Router 
 
 ### Step 16: kNN Visualizers
 
-- [ ] `/week1/knn/basic`: build a 2D classification playground with draggable/addable query point, `k` slider, distance metric toggle, nearest-neighbor highlighting, prediction display, reset, and optional decision-region preview.
-- [ ] `/week1/knn/normalization`: show how feature scale changes neighbor selection, with raw vs normalized comparison and reset.
-- [ ] `/week1/knn/mnist`: show a lightweight digit-neighbor explorer using local data, with query digit, nearest examples, predicted label, and no external dataset fetch.
-- [ ] Reuse the shared plotting primitives for all 2D kNN views.
-- [ ] Keep all visualization state local.
-- [ ] Confirm refreshing kNN routes resets temporary tool state.
+- [x] `/week1/knn/basic`: build a 2D classification playground with draggable/clickable query point, `k` slider, Euclidean/Manhattan/Cosine distance metric toggle, nearest-neighbor highlighting, prediction display, reset, and toggleable decision-region preview.
+- [x] `/week1/knn/normalization`: show how feature scale changes neighbor selection, with linked raw vs normalized comparison and reset.
+- [x] Temporarily defer `/week1/knn/mnist` to Step 16a and render it as `coming-soon`.
+- [x] Reuse the shared plotting primitives for all 2D kNN views.
+- [x] Keep all visualization state local.
+- [x] Confirm refreshing 2D kNN routes resets temporary tool state.
+
+### Step 16a: kNN MNIST Digit Visualizer
+
+- [ ] Manually upload strict 28x28 MNIST-style PNG files under `data/digits/raw/{0..9}`.
+- [ ] Validate that uploaded files are PNG, 28x28, bright digit strokes on dark background.
+- [ ] Pack all uploaded digit files into compressed browser-friendly runtime assets.
+- [ ] Decompress packed digit data in-browser; do not fetch raw PNG files individually.
+- [ ] Implement `/week1/knn/mnist` with query selector, drawing pad, nearest examples, vote counts, predicted label, and reset.
+- [ ] Support Euclidean, Manhattan, and Cosine distance for digit vectors.
+- [ ] Add `k` slider from 1-100 plus a correlated numeric input that supports values above 100 up to the sample count.
+- [ ] Add an include/exclude-self toggle for selected stored query samples.
+- [ ] Mark `/week1/knn/mnist` back to `available` after the runtime dataset and visualizer are complete.
+- [ ] Confirm refreshing the MNIST route resets temporary tool state.
 
 ### Step 17: Decision Tree Visualizers
 
