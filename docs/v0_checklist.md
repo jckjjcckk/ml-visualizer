@@ -240,12 +240,12 @@ Step 1 framework notes are recorded in `README.md` under "Next.js 16 App Router 
 
 ### Step 15: Algorithm Cores
 
-- [ ] Implement pure kNN helpers for distance, neighbor ranking, and class prediction.
-- [ ] Implement pure Decision Tree helpers for candidate splits, entropy, information gain, pruning step state, and leaf regions.
-- [ ] Implement pure Linear Regression helpers for closed-form fit, prediction, residuals, and MSE.
-- [ ] Implement pure gradient descent helpers for Linear Regression path animation.
-- [ ] Keep all algorithm functions deterministic and easy to test.
-- [ ] Avoid UI-specific state inside algorithm modules.
+- [x] Implement pure kNN helpers for distance, neighbor ranking, and class prediction.
+- [x] Implement pure Decision Tree helpers for candidate splits, entropy, information gain, pruning step state, and leaf regions.
+- [x] Implement pure Linear Regression helpers for closed-form fit, prediction, residuals, and MSE.
+- [x] Implement pure gradient descent helpers for Linear Regression path animation.
+- [x] Keep all algorithm functions deterministic and easy to test.
+- [x] Avoid UI-specific state inside algorithm modules.
 
 ### Step 16: kNN Visualizers
 
